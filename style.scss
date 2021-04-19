@@ -1,0 +1,349 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
+
+// $fa-font-path: "./fontawesome/webfonts";
+// @import "./fontawesome/scss/fontawesome.scss";
+// @import "./fontawesome/scss/solid.scss";
+// @import "./fontawesome/scss/brands.scss";
+// @import "./fontawesome/scss/icons";
+
+:root {
+  --c0h: white;
+  --c1h: white;
+  --c2h: white;
+  --c3h: white;
+  --c4h: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+body {
+  font-family: "Raleway", sans-serif;
+  color: rgb(51, 51, 51);
+}
+button {
+  font-family: "Muli", sans-serif;
+}
+path,
+i,
+svg {
+  pointer-events: none;
+}
+.colors {
+  min-height: 80vh;
+  display: flex;
+  color: rgb(212, 212, 212);
+}
+.color {
+  height: 80vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  overflow: hidden;
+}
+.color h2 {
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+.sliders {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0%;
+  background: rgb(255, 255, 255);
+  opacity: 0;
+  padding: 1rem;
+  width: 80%;
+  border-top-right-radius: 1rem;
+  pointer-events: none;
+  border-top-left-radius: 1rem;
+  /* We are adding an adjustemnt class */
+  transform: translateY(100px);
+  transition: all 0.5s ease-in-out;
+}
+.sliders.active {
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: all;
+}
+.sliders button,
+.close-save,
+.close-library,
+.close-adjustment {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  padding: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border: none;
+  background: none;
+  color: #494949;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+  &:hover {
+    color: black;
+  }
+}
+
+.close-adjustment {
+  transform: translateY(-25%);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 20vh;
+}
+.panel button {
+  font-size: 1.2rem;
+  margin: 1rem;
+  padding: 1rem 2rem;
+  background: rgb(31, 33, 63);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+.panel p {
+  font-size: 1.2rem;
+}
+.library-panel,
+.generate-panel,
+.save-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.adjust,
+.lock {
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 2rem 0rem;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+/* Slider Stuff */
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.copy-container,
+.save-container,
+.library-container {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.copy-popup,
+.save-popup,
+.library-popup {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 2rem;
+  transition: transform 0.5s ease;
+  transform: translateY(-2rem);
+  min-width: 50%;
+  min-height: 50vh;
+}
+.copy-popup h4,
+.save-popup h4,
+.library-popup h4 {
+  font-size: 2rem;
+  padding: 2rem;
+  max-width: 95%;
+}
+.copy-container.active,
+.save-container.active,
+.library-container.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
+  transform: translateY(0rem);
+}
+
+.save-name {
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+.close-save,
+.close-library {
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  padding: 0.5rem;
+}
+.submit-save {
+  margin: 2rem;
+  padding: 1rem 3rem;
+  background: rgb(60, 60, 92);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.library-popup {
+  min-width: 40%;
+  padding: 1rem;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  max-height: 50vh;
+}
+.custom-palette {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2rem;
+}
+.small-preview {
+  display: flex;
+  flex: 1;
+}
+.custom-palette h4 {
+  flex: 1;
+}
+
+.small-preview div {
+  height: 5rem;
+  flex: 1;
+}
+
+.palette-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  &:hover::before {
+    content: "";
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  &:hover::after {
+    cursor: pointer;
+    content: "Select";
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    position: absolute;
+  }
+}
+
+.pick-palette-btn {
+  height: 5rem;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  background: rgb(41, 41, 41);
+  color: white;
+}
+
+.hex {
+  position: relative;
+}
+
+.hex::after {
+  content: "Click to copy to clipboard!";
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.75rem;
+  width: 10rem;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+  opacity: 0;
+
+  transition: all 150ms ease-out;
+}
+
+.hex:hover::after {
+  opacity: 1;
+  bottom: 30px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.hue-input[data-hue="0"]::-webkit-slider-thumb {
+  background: red;
+}
+
+$hue-colors: (
+  0: var(--c0h),
+  1: var(--c1h),
+  2: var(--c2h),
+  3: var(--c3h),
+  4: var(--c4h),
+);
+
+@each $datahue, $colorvar in $hue-colors {
+  .hue-input[data-hue="#{$datahue}"]::-webkit-slider-thumb {
+    background: $colorvar;
+  }
+}
