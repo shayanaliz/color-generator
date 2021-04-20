@@ -22,6 +22,7 @@
     outline: none;
     border: none;
   }
+  font-family: "Raleway", sans-serif;
 }
 body {
   font-family: "Raleway", sans-serif;
@@ -143,6 +144,31 @@ svg {
   }
 }
 
+.generate {
+  position: relative;
+  &::after {
+    font-family: "Raleway", sans-serif;
+    content: "Or press spacebar!";
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 0.75rem;
+    width: 8rem;
+    border-radius: 0.8rem;
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 0.6rem;
+    left: 50%;
+    text-align: center;
+    transform: translateX(-50%);
+    opacity: 0;
+
+    transition: all 150ms ease-out;
+  }
+  &:hover::after {
+    opacity: 1;
+    bottom: 2.5rem;
+  }
+}
+
 .adjust,
 .lock {
   font-size: 2rem;
@@ -193,8 +219,8 @@ input[type="range"] {
   border-radius: 2rem;
   transition: transform 0.5s ease;
   transform: translateY(-2rem);
-  min-width: 50%;
-  min-height: 50vh;
+  width: 60%;
+  min-height: 60vh;
 }
 .copy-popup h4,
 .save-popup h4,
@@ -241,6 +267,20 @@ input[type="range"] {
   justify-content: flex-start;
   overflow-y: scroll;
   max-height: 50vh;
+  border-top-right-radius: 0%;
+  border-bottom-right-radius: 0%;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #1f213f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 .custom-palette {
   display: flex;
@@ -255,6 +295,7 @@ input[type="range"] {
 }
 .custom-palette h4 {
   flex: 1;
+  // padding: none;
 }
 
 .small-preview div {
@@ -267,7 +308,7 @@ input[type="range"] {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 50%;
   position: relative;
   &:hover::before {
     content: "";

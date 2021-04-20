@@ -51,7 +51,7 @@ closeButton.forEach((button,index)=>{
 generateBtn.addEventListener('click',randomColors);
 document.addEventListener('keyup',event=>{
     if(event.code==='Space'){
-        if(libraryContainer.classList.contains('active')){
+        if(document.querySelector('.active')===null){
             randomColors();
         }
     }
@@ -229,7 +229,9 @@ saveBtn.addEventListener('click',openPalette);
 closeSave.addEventListener('click',openPalette);
 submitSave.addEventListener('click',savePalette);
 libraryBtn.addEventListener('click',openLibrary);
-closeLibraryBtn.addEventListener('click',openLibrary);
+closeLibraryBtn.addEventListener('click',closeLibrary);
+libraryContainer.addEventListener('click',closeLibrary);
+
 
 function openPalette(e){
     const popUp=saveContainer.children[0];
@@ -318,8 +320,13 @@ function generatePalette(paletteObj){
 
 function openLibrary(){
     const popUp=libraryContainer.children[0];
-    libraryContainer.classList.toggle('active');
-    popUp.classList.toggle('active');
+    libraryContainer.classList.add('active');
+    popUp.classList.add('active');
+}
+function closeLibrary(){
+    const popUp=libraryContainer.children[0];
+    libraryContainer.classList.remove('active');
+    popUp.classList.remove('active');
 }
 
 function getPalettes(){
