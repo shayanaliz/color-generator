@@ -12,7 +12,8 @@ const closeButton=document.querySelectorAll('.close-adjustment');
 const sliderContainers=document.querySelectorAll('.sliders');
 const lockButton=document.querySelectorAll('.lock');
 const allButtons=document.querySelectorAll('button');
-const libraryContainer=document.querySelector('.library-container')
+const libraryContainer=document.querySelector('.library-container');
+const allContainers=document.querySelectorAll('.containers');
 //This is for local storage
 let savedPalettes=[];
 let paletteHistory=[];
@@ -52,9 +53,11 @@ closeButton.forEach((button,index)=>{
 generateBtn.addEventListener('click',randomColors);
 document.addEventListener('keyup',event=>{
     if(event.code==='Space'){
-        if(document.querySelector('.active')===null){
-            randomColors();
-        }
+        if(allContainers[0].classList.contains('active')===false&&
+        allContainers[1].classList.contains('active')===false&&
+        allContainers[2].classList.contains('active')===false){
+        randomColors();
+    }
     }
 });
 document.addEventListener('keydown', event=>{
