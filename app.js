@@ -15,6 +15,7 @@ const allButtons=document.querySelectorAll('button');
 const libraryContainer=document.querySelector('.library-container')
 //This is for local storage
 let savedPalettes=[];
+let paletteHistory=[];
 
 let initialColors;
 
@@ -55,7 +56,12 @@ document.addEventListener('keyup',event=>{
             randomColors();
         }
     }
-})
+});
+document.addEventListener('keydown', event=>{
+    if (event.ctrlKey && event.key === 'z') {
+      retrievePreviousPalette();
+    }
+});
 
 lockButton.forEach((button,index)=>{
     button.addEventListener('click',e=>{
@@ -111,6 +117,7 @@ function randomColors(){
         colorizeSliders(color,hue,brightness,saturation);
         colorizeHueThumb(index,randomColor);
     });
+    paletteHistory.push(initialColors);
 }
 
 function checkContrast(color, text, icons){
@@ -284,26 +291,11 @@ function generatePalette(paletteObj){
     preview.classList.add('small-preview');
     //event listener
     palettePreview.addEventListener('click',e=>{
-        openLibrary();
+        closeLibrary();
         const paletteIndex=e.target.classList[1];
         initialColors=[];
         savedPalettes[paletteIndex].colors.forEach((color,index)=>{
-            initialColors.push(color);
-            colorDivs[index].style.backgroundColor=color;
-            colorDivs[index].children[0].innerText=color;
-            updateTextUI(index);
-            //colorize sliders
-            const sliders=colorDivs[index].querySelectorAll('.sliders input');
-            chromaColor=chroma(color);
-            // console.log(chromaColor);
-            const hue=sliders[0];
-            const brightness=sliders[1];
-            const saturation=sliders[2];
-            hue.value=chroma(color).get('hsl.h');
-            brightness.value=chroma(color).get('hsl.l');
-            saturation.value=chroma(color).get('hsl.s');
-            colorizeSliders(chromaColor,hue,brightness,saturation);
-            colorizeHueThumb(index,chromaColor);
+        generateColors(color,index);
         })      
     })
     paletteObj.colors.forEach(smallColor=>{
@@ -339,6 +331,35 @@ function getPalettes(){
             generatePalette(paletteObj);
         })
     }
+}
+
+function generateColors(color,index){
+    initialColors.push(color);
+    colorDivs[index].style.backgroundColor=color;
+    colorDivs[index].children[0].innerText=color;
+    updateTextUI(index);
+    //colorize sliders
+    const sliders=colorDivs[index].querySelectorAll('.sliders input');
+    chromaColor=chroma(color);
+    const hue=sliders[0];
+    const brightness=sliders[1];
+    const saturation=sliders[2];
+    //set slider values
+    hue.value=chroma(color).get('hsl.h');
+    brightness.value=chroma(color).get('hsl.l');
+    saturation.value=chroma(color).get('hsl.s');
+    colorizeSliders(chromaColor,hue,brightness,saturation);
+    colorizeHueThumb(index,chromaColor);
+}
+
+function retrievePreviousPalette(){
+    const deletedHistory=paletteHistory.length-1;
+    const previousPaletteIndex=paletteHistory.length-2;
+    paletteHistory.splice(deletedHistory,1);
+    const previousPalette=paletteHistory[previousPaletteIndex];
+    previousPalette.forEach((color,index)=>{
+        generateColors(color,index);
+    })
 }
 
 getPalettes();
