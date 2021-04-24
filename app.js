@@ -17,6 +17,7 @@ const allContainers=document.querySelectorAll('.containers');
 //This is for local storage
 let savedPalettes=[];
 let paletteHistory=[];
+let redoHistory=[];
 
 let initialColors;
 
@@ -63,6 +64,12 @@ document.addEventListener('keyup',event=>{
 document.addEventListener('keydown', event=>{
     if (event.ctrlKey && event.key === 'z') {
       retrievePreviousPalette();
+    }
+});
+
+document.addEventListener('keydown', event=>{
+    if (event.ctrlKey && event.key === 'y') {
+      redoButton();
     }
 });
 
@@ -121,6 +128,7 @@ function randomColors(){
         colorizeHueThumb(index,randomColor);
     });
     paletteHistory.push(initialColors);
+    redoHistory=[];
 }
 
 function checkContrast(color, text, icons){
@@ -356,13 +364,27 @@ function generateColors(color,index){
 }
 
 function retrievePreviousPalette(){
-    const deletedHistory=paletteHistory.length-1;
-    const previousPaletteIndex=paletteHistory.length-2;
-    paletteHistory.splice(deletedHistory,1);
-    const previousPalette=paletteHistory[previousPaletteIndex];
-    previousPalette.forEach((color,index)=>{
-        generateColors(color,index);
-    })
+    if(paletteHistory.length>1){
+        const deletedHistory=paletteHistory.length-1;
+        const previousPaletteIndex=paletteHistory.length-2;
+        // redoHistory.push(paletteHistory[deletedHistory]);
+        redoHistory.unshift(paletteHistory[deletedHistory]);
+        paletteHistory.splice(deletedHistory,1);
+        const previousPalette=paletteHistory[previousPaletteIndex];
+        
+        for(let i=0;i<5;i++){
+            generateColors(previousPalette[i],i);
+        }
+    }
+}
+
+function redoButton(){
+    const nextPalette=redoHistory[0];
+    paletteHistory.push(nextPalette);
+    for(let i=0;i<5;i++){
+        generateColors(nextPalette[i],i);
+    }
+    redoHistory.shift();
 }
 
 getPalettes();
